@@ -1,9 +1,9 @@
 package com.avishaneu.scala.assignment
 
 class Config(params: Map[String, String]) {
-  val frequencyParamName = "--frequency"
-  val typeParamName = "--type"
-  val locationParamName = "--location"
+  private val frequencyParamName = "--frequency"
+  private val typeParamName = "--type"
+  private val locationParamName = "--location"
 
   var periodSeconds: Option[Int] = Option.empty
   var checkType: Option[String] = Option.empty
