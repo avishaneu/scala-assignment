@@ -3,8 +3,8 @@ package com.avishaneu.scala.assignment
 import com.avishaneu.scala.assignment.agent.Agent
 
 object Application extends App {
-  val params = readNextParam(Map(), args.toList)
-  new Agent(params).start()
+  val config = new Config(readNextParam(Map(), args.toList))
+  new Agent(config).start()
 
   def readNextParam(parsed: Map[String, String], paramList: List[String]): Map[String, String] = {
     paramList match {

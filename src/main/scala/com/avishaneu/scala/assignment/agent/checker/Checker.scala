@@ -1,19 +1,25 @@
 package com.avishaneu.scala.assignment.agent.checker
 
+import com.avishaneu.scala.assignment.Config
+
 
 trait Checker {
-  def check: Boolean
+  def check: CheckResult
 }
 
 object Checker {
-  val locationParamName = "--location"
+  def getImplementation(config: Config): Checker = {
 
-  def getImplementation(name: String, params: Map[String, String]): Checker = name match {
+    if (config.checkType.isEmpty)
+      throw new IllegalArgumentException("Check type has to be specified")
+
+    config.checkType.get match {
       case "fileCheck" =>
-        if (params.get(locationParamName).isEmpty)
+        if (config.location.isEmpty)
           throw new IllegalArgumentException("FileCheck requires file location to be specified")
-        new FileChecker(params(locationParamName))
+        new FileChecker(config.location.get)
       case "healthCheck" => new HealthChecker
-      case _ => throw new IllegalArgumentException("No checker with name " + name + " found")
+      case _ => throw new IllegalArgumentException("No checker with name " + config.checkType.get + " found")
     }
+  }
 }

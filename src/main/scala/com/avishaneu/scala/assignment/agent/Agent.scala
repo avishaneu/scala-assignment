@@ -1,25 +1,20 @@
 package com.avishaneu.scala.assignment.agent
 
+import com.avishaneu.scala.assignment.Config
 import com.avishaneu.scala.assignment.agent.checker.Checker
 
 
-class Agent(params: Map[String, String]) {
+class Agent(config: Config) {
 
-  val frequencyParamName = "--frequency"
-  val typeParamName = "--type"
+  if (config.periodSeconds.isEmpty)
+    throw new IllegalArgumentException("Frequency should be specified")
+  private val periodSeconds = config.periodSeconds.get
 
-  if (params.get(frequencyParamName).isEmpty)
-    throw new IllegalArgumentException("Parameter " + frequencyParamName + " has to be specified")
-  private val periodSeconds = params(frequencyParamName).toInt
-
-  if (params.get(typeParamName).isEmpty)
-    throw new IllegalArgumentException("Parameter " + typeParamName + " has to be specified")
-  private val checker = Checker.getImplementation(params(typeParamName), params)
+  private val checker = Checker.getImplementation(config)
 
 
   def start(): Unit = while (true) {
-    if (checker.check) println("healthy")
-    else println("unhealthy")
+    checker.check.printResult()
     Thread.sleep(periodSeconds * 1000)
   }
 }
