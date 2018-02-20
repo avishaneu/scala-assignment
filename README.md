@@ -15,6 +15,16 @@ To run the application use
 To build an executable (by java cli) jar use sbt assembly plugin:
     
     > sbt assembly
+    
+Testing
+-------
+To run tests use
+    
+    > sbt clean coverage test
+    
+Coverage report can be generated with the following command:
+
+    > sbt coverageReport
 
 Parameters
 ----------
